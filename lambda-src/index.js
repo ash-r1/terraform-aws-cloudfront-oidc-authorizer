@@ -269,6 +269,10 @@ exports.handler = async (event) => {
 
     switch(eventType) {
     case 'viewer-request':
+        // Auth only root
+        if( request.uri != '/' && request.uri != '/index.html' ){
+            return request;
+        }
         res = await viewerRequestHandler(request, event);
         if (userViewerRequestHandler) {
             if (userViewerRequestHandler.constructor.name === 'AsyncFunction') {
